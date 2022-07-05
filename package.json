@@ -10,17 +10,27 @@
     "build": "turbo run build",
     "dev": "turbo run dev --parallel",
     "lint": "turbo run lint",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\""
+    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "migrate": "prisma migrate dev",
+    "seed": "prisma db seed"
   },
   "devDependencies": {
     "eslint-config-custom": "*",
     "prettier": "latest",
+    "prisma": "^4.0.0",
+    "ts-node": "^10.8.1",
     "turbo": "latest"
   },
   "engines": {
     "npm": ">=7.0.0",
     "node": ">=14.0.0"
   },
-  "dependencies": {},
-  "packageManager": "npm@8.3.0"
+  "dependencies": {
+    "@prisma/client": "^4.0.0",
+    "puppeteer": "^15.2.0"
+  },
+  "packageManager": "npm@8.3.0",
+  "prisma": {
+    "seed": "ts-node prisma/seed.ts"
+  }
 }
