@@ -1,4 +1,4 @@
-import { prisma } from './db';
+import { prisma } from 'database';
 import puppeteer from 'puppeteer';
 import type { List } from '@prisma/client';
 
