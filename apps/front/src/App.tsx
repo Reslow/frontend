@@ -8,9 +8,9 @@ function App() {
   const [data, setData] = useState<ListItem[]>([]);
 
   async function hej() {
-    let a = await fetch("http://localhost:3000/listitems");
-    let b = await a.json();
-    setData(b);
+    let response = await fetch("http://localhost:3000/listitems");
+    let data = await response.json();
+    setData(data);
   }
 
   useEffect(() => {
@@ -23,7 +23,7 @@ function App() {
 
       <section>
         {data.map((item, i) => {
-          return <Item listItem={item} />;
+          return <Item listItem={item} key={i} />;
         })}
       </section>
     </div>

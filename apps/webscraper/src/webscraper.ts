@@ -24,7 +24,7 @@ export default async function Webscraper() {
           title: item.querySelector('.header-container h3')?.innerHTML ?? '',
           company: item.querySelector('.pb-company-name')?.innerHTML ?? '',
           position: item.querySelector('.pb-job-role')?.innerHTML ?? '',
-          url: item.querySelector('.header-container a')?.innerHTML ?? '',
+          url: item.querySelector('.header-container a href')?.innerHTML ?? '',
         });
       }
       return list;
