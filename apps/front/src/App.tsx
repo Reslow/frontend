@@ -7,14 +7,14 @@ import "./App.css";
 function App() {
   const [data, setData] = useState<ListItem[]>([]);
 
-  async function hej() {
+  async function getData() {
     let response = await fetch("http://localhost:3000/listitems");
     let data = await response.json();
     setData(data);
   }
 
   useEffect(() => {
-    hej();
+    getData();
   }, []);
 
   return (

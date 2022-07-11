@@ -26,4 +26,5 @@ model ListItem {
   url      String
   list     List   @relation(fields: [listId], references: [id])
   listId   String
+  desc     String
 }
