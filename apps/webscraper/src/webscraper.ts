@@ -33,18 +33,19 @@ export default async function Webscraper() {
       const newPage = await browser.newPage();
 
       await newPage.goto(`https://arbetsformedlingen.se${element.url}`);
-      console.log(`https://arbetsformedlingen.se${element.url}`);
       await newPage.waitForSelector('.job-info');
 
-      const data = await newPage.evaluate(() => {
-        console.log('Eval');
+      const subdata = await newPage.evaluate(() => {
         const item = document.querySelector('.job-info')?.innerHTML;
-        console.log(item);
 
-        console.log('-----');
-        console.log({ item });
-        console.log('-----');
         return item;
+      });
+
+      data.forEach((element) => {
+        console.log(element.title);
+        if (subdata !== undefined) {
+          element.desc = subdata;
+        }
       });
       console.log(data);
 
@@ -89,7 +90,7 @@ export default async function Webscraper() {
 
   const list = await createList();
   const data = await setUpBrowser();
-
+  console.log(data);
   if (data !== undefined) {
     saveDataToList(data, list);
   } else return;
