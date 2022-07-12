@@ -28,7 +28,26 @@ export default async function Webscraper() {
         return list;
       }
     });
-    const newData = data?.map(async (element) => {
+    const k = await subPage(data, browser);
+    return k;
+  }
+
+  async function subPage(
+    data:
+      | {
+          title: string;
+          company: string;
+          position: string;
+          url: string;
+          desc: string;
+        }[]
+      | undefined,
+    browser: puppeteer.Browser,
+  ) {
+    if (!data) {
+      return;
+    }
+    const newData = data.map(async (element) => {
       const newPage = await browser.newPage();
       await newPage.goto(`https://arbetsformedlingen.se${element.url}`);
       await newPage.waitForSelector('.job-info');
@@ -44,10 +63,8 @@ export default async function Webscraper() {
       } else console.log('UNDEFINED');
       return element;
     });
-    console.log('*******');
-    console.log(newData);
-    console.log('*******');
-    return newData;
+
+    return Promise.all(newData);
   }
 
   async function createList() {
