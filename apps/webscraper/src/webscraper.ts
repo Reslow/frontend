@@ -28,10 +28,8 @@ export default async function Webscraper() {
         return list;
       }
     });
-
-    const newList = data?.forEach(async (element) => {
+    const newData = data?.map(async (element) => {
       const newPage = await browser.newPage();
-
       await newPage.goto(`https://arbetsformedlingen.se${element.url}`);
       await newPage.waitForSelector('.job-info');
 
@@ -41,17 +39,15 @@ export default async function Webscraper() {
         return item;
       });
 
-      data.forEach((element) => {
-        console.log(element.title);
-        if (subdata !== undefined) {
-          element.desc = subdata;
-        }
-      });
-      console.log(data);
-
-      return data;
+      if (subdata !== undefined) {
+        element.desc = subdata;
+      } else console.log('UNDEFINED');
+      return element;
     });
-    return newList;
+    console.log('*******');
+    console.log(newData);
+    console.log('*******');
+    return newData;
   }
 
   async function createList() {
@@ -74,6 +70,10 @@ export default async function Webscraper() {
     }[],
     list: List,
   ) {
+    console.log('checking');
+    console.log(data);
+    console.log('checking');
+
     data.forEach(async (item) => {
       await prisma.listItem.createMany({
         data: {
@@ -90,7 +90,10 @@ export default async function Webscraper() {
 
   const list = await createList();
   const data = await setUpBrowser();
+  console.log('c');
   console.log(data);
+  console.log('c');
+
   if (data !== undefined) {
     saveDataToList(data, list);
   } else return;
