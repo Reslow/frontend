@@ -3,17 +3,28 @@ import puppeteer from 'puppeteer';
 import type { List } from '@prisma/client';
 
 export default async function Webscraper() {
-  async function setUpBrowser() {
-    const browser = await puppeteer.launch({ headless: false });
+  //  I initiate browser and wit until page is loaded and return page
+  async function getBrowser() {
+    const browser = await puppeteer.launch({ headless: true });
+    return browser;
+  }
 
+  // 'https://arbetsformedlingen.se/platsbanken/annonser?q=front%20end'
+  // '.card-container'
+  async function getPage(url: string, selector: string) {
+    const browser = await getBrowser();
     const page = await browser.newPage();
-    await page.goto(
-      'https://arbetsformedlingen.se/platsbanken/annonser?q=front%20end',
-    );
-    await page.waitForSelector('.card-container');
-    const data = await page.evaluate(() => {
+    await page.goto(url);
+    await page.waitForSelector(selector);
+    return page;
+  }
+
+  // go throu page and get items and put them in a list arrar and return the list
+  async function getListFromPage(page: puppeteer.Page) {
+    const data = await page.evaluate(async () => {
       const list = [];
       const items = document.querySelectorAll('.card-container');
+      console.log('items', items);
       for (const item of items) {
         list.push({
           title: item.querySelector('.header-container h3')?.innerHTML ?? '',
@@ -24,15 +35,13 @@ export default async function Webscraper() {
             '',
           desc: '',
         });
-
-        return list;
       }
+      return list;
     });
-    const k = await subPage(data, browser);
-    return k;
+    return Promise.all(data);
   }
 
-  async function subPage(
+  async function getDescFromSub(
     data:
       | {
           title: string;
@@ -42,19 +51,17 @@ export default async function Webscraper() {
           desc: string;
         }[]
       | undefined,
-    browser: puppeteer.Browser,
   ) {
     if (!data) {
       return;
     }
     const newData = data.map(async (element) => {
-      const newPage = await browser.newPage();
-      await newPage.goto(`https://arbetsformedlingen.se${element.url}`);
-      await newPage.waitForSelector('.job-info');
+      const url = `https://arbetsformedlingen.se${element.url}`;
+      const selector = '.job-info';
+      const newPage = await getPage(url, selector);
 
       const subdata = await newPage.evaluate(() => {
         const item = document.querySelector('.job-info')?.innerHTML;
-
         return item;
       });
 
@@ -63,7 +70,6 @@ export default async function Webscraper() {
       } else console.log('UNDEFINED');
       return element;
     });
-
     return Promise.all(newData);
   }
 
@@ -87,10 +93,6 @@ export default async function Webscraper() {
     }[],
     list: List,
   ) {
-    console.log('checking');
-    console.log(data);
-    console.log('checking');
-
     data.forEach(async (item) => {
       await prisma.listItem.createMany({
         data: {
@@ -105,13 +107,12 @@ export default async function Webscraper() {
     });
   }
 
-  const list = await createList();
-  const data = await setUpBrowser();
-  console.log('c');
-  console.log(data);
-  console.log('c');
+  const page = await getPage(
+    'https://arbetsformedlingen.se/platsbanken/annonser?q=front%20end',
+    '.card-container',
+  );
 
-  if (data !== undefined) {
-    saveDataToList(data, list);
-  } else return;
+  const list = await getListFromPage(page);
+  const data = getDescFromSub(list);
+  console.log(data);
 }
