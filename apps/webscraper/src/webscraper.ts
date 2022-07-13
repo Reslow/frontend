@@ -4,17 +4,13 @@ import type { List } from '@prisma/client';
 
 export default async function Webscraper() {
   //  I initiate browser and wit until page is loaded and return page
-  async function getBrowser() {
-    const browser = await puppeteer.launch({ headless: true });
-    return browser;
-  }
+  const browser = await puppeteer.launch({ headless: true });
 
   // 'https://arbetsformedlingen.se/platsbanken/annonser?q=front%20end'
   // '.card-container'
   async function getPage(url: string, selector: string) {
-    const browser = await getBrowser();
     const page = await browser.newPage();
-    await page.goto(url);
+    await page.goto(url, { timeout: 0 });
     await page.waitForSelector(selector);
     return page;
   }
@@ -24,7 +20,6 @@ export default async function Webscraper() {
     const data = await page.evaluate(async () => {
       const list = [];
       const items = document.querySelectorAll('.card-container');
-      console.log('items', items);
       for (const item of items) {
         list.push({
           title: item.querySelector('.header-container h3')?.innerHTML ?? '',
@@ -38,7 +33,8 @@ export default async function Webscraper() {
       }
       return list;
     });
-    return Promise.all(data);
+    const result = data;
+    return result;
   }
 
   async function getDescFromSub(
@@ -113,6 +109,6 @@ export default async function Webscraper() {
   );
 
   const list = await getListFromPage(page);
-  const data = getDescFromSub(list);
-  console.log(data);
+  const data = await getDescFromSub(list);
+  console.log('checking', data);
 }
