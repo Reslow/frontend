@@ -57,7 +57,7 @@ export default async function Webscraper() {
       const newPage = await getPage(url, selector);
 
       const subdata = await newPage.evaluate(() => {
-        const item = document.querySelector('.job-info')?.innerHTML;
+        const item = document.querySelector('.job-description')?.innerHTML;
         return item;
       });
 
@@ -108,7 +108,10 @@ export default async function Webscraper() {
     '.card-container',
   );
 
-  const list = await getListFromPage(page);
-  const data = await getDescFromSub(list);
-  console.log('checking', data);
+  const list = await createList();
+  const items = await getListFromPage(page);
+  const data = await getDescFromSub(items);
+  if (data) {
+    saveDataToList(data, list);
+  }
 }
