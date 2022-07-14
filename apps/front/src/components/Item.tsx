@@ -1,6 +1,5 @@
 import type { ListItem } from "@prisma/client";
 import "./item.css";
-import { Markup } from "interweave";
 import Parser from "html-react-parser";
 
 type Props = {
@@ -9,14 +8,13 @@ type Props = {
 
 export default function Item({ listItem }: Props) {
   const description = listItem.desc;
-
+  const data = Parser(description);
   return (
     <div className="bg">
-      <p>{listItem.position}</p>
-      <p>{listItem.company}</p>
+      <h1>{listItem.position}</h1>
+      <h2>{listItem.company}</h2>
+      <p>{data}</p>
       <a href={`http://www.arbetsformedlingen.se${listItem.url}`}>to ad</a>
-      <p>{Parser(description)}</p>
-      {/* <Markup content={description} /> */}
     </div>
   );
 }

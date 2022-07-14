@@ -1,3 +1,14 @@
 .bg {
-  background-color: aqua;
+  background-color: beige;
+  padding: 50px;
+  max-height: 100%;
+  text-overflow: hidden;
+}
+
+.bg p {
+  overflow: hidden;
+  text-overflow: ellipse;
+  display: -webkit-box;
+  -webkit-line-clamp: 3; /* number of lines to show */
+  -webkit-box-orient: vertical;
 }

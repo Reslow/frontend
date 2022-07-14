@@ -21,7 +21,7 @@ function App() {
     <div className="App">
       <h1> Front end </h1>
 
-      <section>
+      <section className="container">
         {data.map((item, i) => {
           return <Item listItem={item} key={i} />;
         })}
