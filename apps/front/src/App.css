@@ -7,4 +7,18 @@
   gap: 20px;
   grid-template-columns: auto auto;
   justify-content: center;
+  margin-top: 20px;
+}
+
+.App {
+  padding: 20px;
+  font-family: "Courier New", Courier, monospace;
+}
+
+.texts {
+  color: blue;
+}
+
+.solo {
+  color: green;
 }
