@@ -1,17 +1,28 @@
 .ads-container {
-  background-color: #a4c9d1;
-  padding: 20px 40px;
-  max-height: 100%;
   border-radius: 3px;
-  box-shadow: 5px 0px 5px 0px #9ab1b7;
+  max-height: 300px;
+  width: 100%;
+  overflow: hidden;
+  border: #ccbecc 1px solid;
+  padding: 5px;
 }
 
-.ads-container p::before {
-  content: "";
+.desc {
   width: 100%;
-  height: 100%;
-  position: absolute;
-  left: 0px;
-  top: 72px;
-  background: linear-gradient(rgba(255, 255, 255, 0), rgb(255, 255, 255));
+  padding: 15px;
+  background-image: linear-gradient(to bottom, transparent, #dfd8df);
+}
+
+.button {
+  background-color: #573968;
+  color: white;
+  padding: 10px 15px;
+  border-radius: 10px 5px;
+  text-decoration-line: none;
+  box-shadow: #cab7ca75 2px 2px 2px 2px;
+}
+
+.button:hover {
+  background-color: #41314a;
+  box-shadow: #cab7caa5 5px 3px 3px 4px;
 }
