@@ -9,13 +9,13 @@ function App() {
   const [list, setList] = useState<List>();
 
   async function getData() {
-    let response = await fetch("http://localhost:3000/listitems");
+    let response = await fetch("http://localhost:3001/listitems");
     let data = await response.json();
     setData(data);
   }
 
   async function getListData() {
-    let response = await fetch("http://localhost:3000/list");
+    let response = await fetch("http://localhost:3001/list");
     let data = await response.json();
 
     setList(data[0]);

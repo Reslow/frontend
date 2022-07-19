@@ -110,6 +110,7 @@ export default async function Webscraper() {
 
   const list = await createList();
   const items = await getListFromPage(page);
+
   const data = await getDescFromSub(items);
   if (data) {
     saveDataToList(data, list);
