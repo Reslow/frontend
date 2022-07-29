@@ -3,26 +3,33 @@
   max-height: 300px;
   width: 100%;
   overflow: hidden;
-  border: #ccbecc 1px solid;
-  padding: 5px;
+  border: #abb3bbcf 1px solid;
+  padding: 15px;
+  box-shadow: #e9e8e95d 5px 5px 8px 4px;
+  background-color: #f0f0f0;
 }
 
 .desc {
   width: 100%;
-  padding: 15px;
-  background-image: linear-gradient(to bottom, transparent, #dfd8df);
+  background-image: linear-gradient(to bottom, transparent, #f5f5f5);
 }
 
 .button {
-  background-color: #573968;
-  color: white;
-  padding: 10px 15px;
+  background-color: #3b6ee4;
+  color: rgb(229, 229, 229);
+  font-size: larger;
+  font-weight: 700;
+  padding: 10px 10px;
   border-radius: 10px 5px;
   text-decoration-line: none;
   box-shadow: #cab7ca75 2px 2px 2px 2px;
 }
 
 .button:hover {
-  background-color: #41314a;
-  box-shadow: #cab7caa5 5px 3px 3px 4px;
+  background-color: #3465d5;
+}
+
+.btn-con {
+  display: flex;
+  justify-content: end;
 }

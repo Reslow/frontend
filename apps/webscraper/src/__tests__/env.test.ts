@@ -1,5 +1,7 @@
-describe('Environment unit testing', () => {
-  it('should display the environment variable', () => {
-    expect(process.env.MY_VARIABLE).toBe('AZERTY');
+describe('Unit testing', () => {
+  const MY_VARIABLE = 'Hello World!';
+
+  it('should say hello world', () => {
+    expect(MY_VARIABLE).toBe('Hello World!');
   });
 });
